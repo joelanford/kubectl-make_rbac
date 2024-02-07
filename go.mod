@@ -14,7 +14,7 @@ require (
 	k8s.io/component-helpers v0.29.1
 	k8s.io/klog/v2 v2.110.1
 	k8s.io/kubectl v0.29.1
-	sigs.k8s.io/yaml v1.3.0
+	sigs.k8s.io/yaml v1.4.0
 )
 
 require (
