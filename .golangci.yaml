@@ -1,0 +1,53 @@
+run:
+  # Default timeout is 1m, up to give more room
+  timeout: 4m
+
+linters:
+  enable:
+  - asciicheck
+  - bodyclose
+  - errorlint
+  - gofmt
+  - goimports
+  - gosec
+  - importas
+  - misspell
+  - nestif
+  - nonamedreturns
+  - prealloc
+  - revive
+  - stylecheck
+  - tparallel
+  - unconvert
+  - unparam
+  - unused
+  - whitespace
+
+linters-settings:
+  errorlint:
+    errorf: false
+
+  importas:
+    alias:
+    - pkg: k8s.io/apimachinery/pkg/apis/meta/v1
+      alias: metav1
+    - pkg: k8s.io/apimachinery/pkg/api/errors
+      alias: apierrors
+    - pkg: k8s.io/apimachinery/pkg/util/runtime
+      alias: utilruntime
+    - pkg: "^k8s\\.io/api/([^/]+)/(v[^/]+)$"
+      alias: $1$2
+    - pkg: k8s.io/client-go/kubernetes/typed/authentication/v1
+      alias: clientauthnv1
+    - pkg: k8s.io/client-go/kubernetes/typed/authorization/v1
+      alias: clientauthzv1
+    - pkg: k8s.io/client-go/kubernetes/typed/core/v1
+      alias: clientcorev1
+    - pkg: k8s.io/kubectl/pkg/cmd/util
+      alias: cmdutil
+
+  goimports:
+    local-prefixes: github.com/joelanford/kubectl-make_rbac
+
+output:
+  format: tab

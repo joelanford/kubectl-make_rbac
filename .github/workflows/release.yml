@@ -1,0 +1,42 @@
+name: release
+on:
+  push:
+    branches:
+    - 'main'
+    tags:
+    - 'v*.*.*'
+  pull_request:
+    branches:
+    - 'main'
+  merge_group:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: go.mod
+
+    - name: Set the release related variables
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: |
+        echo RELEASE_ARGS="--clean" >> $GITHUB_ENV
+        echo ENABLE_RELEASE_PIPELINE=true >> $GITHUB_ENV
+
+    - name: Run GoReleaser
+      run: make release
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+   # TODO: propose addition to main krew index
+   # - name: Update new version in krew-index
+   #    if: startsWith(github.ref, 'refs/tags/v')
+   #    uses: rajatjindal/krew-release-bot@v0.0.46
